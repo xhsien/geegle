@@ -46,21 +46,26 @@ $('#submit-button').click(function() {
         fromTime: start,
         keywords: search_term
     }
-    alert(formatParams(params));
+
+    //alert(formatParams(params));
     xhr.open('GET', 'https://localhost:3000/query' + formatParams(params));
     xhr.onreadystatechange = function() {
         if(xhr.readyState > 3 && xhr.status==200) { 
-           alert(xhr.responseText);
-           var results = fromTextToArray(xhr.responseText);
+            //alert(xhr.responseText);
+            var results = fromTextToArray(xhr.responseText);
+
             $("#result").append('<ul class="list-group list-group-flush"></ul>');
             for (var i = 0; i < results.length; i++) {
-                var li = '<li class="list-group-item">';
-                $("ul").append(li.concat(removeQuote(results[i])));
-            }
+                var a = document.createElement("a");
+                a.setAttribute('href', results[i]);
+                a.innerHTML = (results[i].length > 70 ? results[i].substring(0, 69) + "..." : results[i]);
+
+                var li = document.createElement("li");
+                li.setAttribute('class', "list-group-item");
+                li.append(a)
+                $("ul").append(li);
+            }           
         }
     }
     xhr.send();
-
-    var results = [];
-
 })
