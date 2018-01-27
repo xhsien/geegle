@@ -22,6 +22,7 @@ function to_second(day) {
     return day * 24 * 60 * 60;
 }
 
+
 $('#submit-button').click(function() {
     $("#result").html("");
 
