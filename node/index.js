@@ -79,6 +79,8 @@ app.get('/uploadContent', (req, res) => {
     es.post(req.query.uploadTime, req.query.url, req.query.id, function(confirmRes) { res.send(confirmRes); });
 })
 
+
+
 app.get('/query', (req, res) => {
     setTimeout(function() {
         search_term_global = "";

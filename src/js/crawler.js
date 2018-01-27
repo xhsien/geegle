@@ -8,14 +8,16 @@ function formatParams(params) {
 
 var url = window.location.href;
 var timestamp = Math.round((new Date()).getTime() / 1000);
+var title = document.title;
 
 var params = {
 	url: url,
 	uploadTime: timestamp,
-	id: timestamp
+	id: timestamp,
+    title: title,
 }
 
-alert("ABOUT TO DO");
+//alert("ABOUT TO DO");
 xhr.open('GET', 'https://localhost:3000/uploadContent' + formatParams(params));
 xhr.onreadystatechange = function() {
     if(xhr.readyState > 3 && xhr.status==200) alert("Uploaded: " + xhr.responseText);
