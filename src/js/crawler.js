@@ -15,9 +15,11 @@ var params = {
 	id: timestamp
 }
 
-//alert("ABOUT TO DO");
-xhr.open('GET', 'http://localhost:3000/uploadContent' + formatParams(params));
+alert("ABOUT TO DO");
+xhr.open('GET', 'https://localhost:3000/uploadContent' + formatParams(params));
 xhr.onreadystatechange = function() {
-    //if(xhr.readyState > 3 && xhr.status==200) alert("Uploaded: " + xhr.responseText);
+    if(xhr.readyState > 3 && xhr.status==200) alert("Uploaded: " + xhr.responseText);
 }
 xhr.send();
+
+

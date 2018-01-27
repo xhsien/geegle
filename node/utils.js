@@ -1,4 +1,5 @@
 var Boilerpipe = require('boilerpipe');
+
 var GOOGLE_APPLICATION_CREDENTIALS = "./Secret_Credential.json"
 // Imports the Google Cloud client library
 const vision = require('@google-cloud/vision');
@@ -6,6 +7,9 @@ const vision = require('@google-cloud/vision');
 // Creates a client
 const client = new vision.ImageAnnotatorClient();
 						
+
+					
+
 function getContent(url, callback) {  
 	var boilerpipe = new Boilerpipe({
     	extractor: Boilerpipe.Extractor.Article,
@@ -57,7 +61,9 @@ function getContent(url, callback) {
 		}
 	);
 
+
 	
+
 }
 
 

@@ -1,3 +1,4 @@
+// const https = require("https");
 var xhr = new XMLHttpRequest();
 
 function formatParams(params) {
@@ -5,6 +6,17 @@ function formatParams(params) {
         return key+"="+encodeURIComponent(params[key]);
     }).join("&");
 }
+
+function fromTextToArray(str) {
+    var res = str.substr(1, str.length - 2);
+    res = res.split(",");
+    return res;
+}
+
+function removeQuote(str) {
+    return str.replace(new RegExp('"', 'g'), '');
+}
+
 
 function to_second(day) {
     return day * 24 * 60 * 60;
@@ -34,19 +46,21 @@ $('#submit-button').click(function() {
         fromTime: start,
         keywords: search_term
     }
-    // alert(formatParams(params));
-    xhr.open('GET', 'http://localhost:3000/query' + formatParams(params));
+    alert(formatParams(params));
+    xhr.open('GET', 'https://localhost:3000/query' + formatParams(params));
     xhr.onreadystatechange = function() {
-        //if(xhr.readyState > 3 && xhr.status==200) 
-           //alert("QueryResult: " + xhr.responseText);
+        if(xhr.readyState > 3 && xhr.status==200) { 
+           alert(xhr.responseText);
+           var results = fromTextToArray(xhr.responseText);
+            $("#result").append('<ul class="list-group list-group-flush"></ul>');
+            for (var i = 0; i < results.length; i++) {
+                var li = '<li class="list-group-item">';
+                $("ul").append(li.concat(removeQuote(results[i])));
+            }
+        }
     }
     xhr.send();
 
     var results = [];
 
-    $("#result").append('<ul class="list-group list-group-flush"></ul>');
-    for (var i = 0; i < results.length; i++) {
-        var li = '<li class="list-group-item">';
-        $("ul").append(li.concat(results[i]));
-    }
 })
