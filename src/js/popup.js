@@ -35,7 +35,8 @@ $('#submit-button').click(function() {
     // alert(formatParams(params));
     xhr.open('GET', 'http://localhost:3000/query' + formatParams(params));
     xhr.onreadystatechange = function() {
-        if(xhr.readyState > 3 && xhr.status==200) alert("QueryResult: " + xhr.responseText);
+        if(xhr.readyState > 3 && xhr.status==200) 
+           console.log("QueryResult: " + xhr.responseText);
     }
     xhr.send();
 })
