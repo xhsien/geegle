@@ -31,7 +31,7 @@ function parseResult(returnList) {
    var temp = returnList['hits']['hits'];
    var len = temp.length > 5 ? 5 : temp.length;
    for(var i = 0; i < len; i++) {
-       res.push(temp[i]['_source']['url']);
+       res.push([temp[i]['_source']['url'], temp[i]['_source']['title']]);
    }
    return res;
 }

@@ -57,8 +57,10 @@ $('#submit-button').click(function() {
             $("#result").append('<ul class="list-group list-group-flush"></ul>');
             for (var i = 0; i < results.length; i++) {
                 var a = document.createElement("a");
-                a.setAttribute('href', results[i]);
-                a.innerHTML = (results[i].length > 70 ? results[i].substring(0, 69) + "..." : results[i]);
+                a.setAttribute('href', results[i][0]);
+                a.setAttribute('title', results[i][1]);
+                a.setAttribute('target', '_blank');
+                a.innerHTML = (results[i][0].length > 70 ? results[i][0].substring(0, 69) + "..." : results[i][0]);
 
                 var li = document.createElement("li");
                 li.setAttribute('class', "list-group-item");
