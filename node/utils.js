@@ -1,10 +1,11 @@
 var Boilerpipe = require('boilerpipe');
-var boilerpipe = new Boilerpipe({
-    extractor: Boilerpipe.Extractor.Article,
-    url: 'https://www.w3schools.com/js/js_functions.asp'
-  });
+
 						
 function getContent(url, callback) {  
+	var boilerpipe = new Boilerpipe({
+    	extractor: Boilerpipe.Extractor.Article,
+    	url: url
+  	});
 	boilerpipe.getText(
 		function(err, text){
 			if(!err){

@@ -36,7 +36,7 @@ $('#submit-button').click(function() {
     xhr.open('GET', 'http://localhost:3000/query' + formatParams(params));
     xhr.onreadystatechange = function() {
         if(xhr.readyState > 3 && xhr.status==200) 
-           console.log("QueryResult: " + xhr.responseText);
+           alert("QueryResult: " + xhr.responseText);
     }
     xhr.send();
 })
