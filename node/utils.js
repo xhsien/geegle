@@ -1,5 +1,15 @@
 var Boilerpipe = require('boilerpipe');
+
+var GOOGLE_APPLICATION_CREDENTIALS = "./Secret_Credential.json"
+// Imports the Google Cloud client library
+const vision = require('@google-cloud/vision');
+
+// Creates a client
+const client = new vision.ImageAnnotatorClient();
+						
+
 					
+
 function getContent(url, callback) {  
 	var boilerpipe = new Boilerpipe({
     	extractor: Boilerpipe.Extractor.Article,
@@ -7,24 +17,59 @@ function getContent(url, callback) {
   	});
 	boilerpipe.getText(
 		function(err, text){
-			if(!err){
-				callback(text);
-			}else{
-				console.log('Error');
-			}
-		}
-	);
+			boilerpipe.getImages(
+		function(error2, images){
+			if(!error2){
+				for(var i = 0; i < images.length; i++){
+			   		client
+                       .labelDetection(images[i].src)
+                       .then(results => {
+                       const labels = results[0].labelAnnotations;
 
-	boilerpipe.getImages(
-		function(err, images){
-			if(!err){
-				console.log(images);
+                       //console.log(typeof labels[0].description);
+                       var labels_being_added = " ";
+                       for(var label = 0; label < labels.length; label++){
+                       	  labels_being_added =  labels_being_added + " " + (labels[label].description);
+
+
+                       }
+                       if(!err){
+
+							callback(text + labels_being_added);
+						}else{
+							callback(labels_being_added);
+							console.error("TEXT error");
+						}
+                      // labels.forEach(label => console.log(label.description));
+            })
+                     .catch(err => {
+                      console.error('ERROR:', err);
+                      });	
+			     }
 			}else{
+				if (!err) {
+					callback(text);
+					console.error("Imageerror");
+				}else{
+				    console.error("BOTH ERROR");	
+				}
 				console.log("NO IMAGES/ ERROR LOADING IMAGES")
 			}
 		}
 	);
+			
+		}
+	);
+
+
+	
+
 }
+
+
+
+// Performs label detection on the image file
+
 
 function parseResult(returnList) {
    var res = [];
