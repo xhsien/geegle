@@ -11,6 +11,8 @@ function to_second(day) {
 }
 
 $('#submit-button').click(function() {
+    $("#result").html("");
+
     var duration_text = $('#duration').find("option:selected").text();
     
     var duration;
@@ -39,4 +41,12 @@ $('#submit-button').click(function() {
            //alert("QueryResult: " + xhr.responseText);
     }
     xhr.send();
+
+    var results = [];
+
+    $("#result").append('<ul class="list-group list-group-flush"></ul>');
+    for (var i = 0; i < results.length; i++) {
+        var li = '<li class="list-group-item">';
+        $("ul").append(li.concat(results[i]));
+    }
 })
