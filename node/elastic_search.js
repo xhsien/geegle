@@ -17,6 +17,8 @@ function post(date, url, id, callback) {
              uploadTime: date,
              url: url
           }
+
+
      }, function(err, res) {
    	      if(err) {
   	         console.log(err);
@@ -25,6 +27,7 @@ function post(date, url, id, callback) {
              callback(res);
          	}  
      });
+     
   });
 }
 
