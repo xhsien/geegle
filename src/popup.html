@@ -7,16 +7,20 @@
   </head>
   <body>
     <div class="col-lg-6">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." autofocus>
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="button">Go!</button>
-        </span>
+      <div class="input-group" id="query-form">
+        <span class="input-group-text">Search result </span>
+          <select class="custom-select" id="duration">
+            <option value="1">from 1 day ago</option>
+            <option value="7" selected>from 1 week ago</option>
+            <option value="0">since the big bang</option>
+          </select>
+        <input type="text" id="search-term" class="form-control" placeholder="keywords..." aria-label="search-term" aria-describedby="basic-addon2" autofocus>
+        <button class="btn btn-outline-secondary" id="submit-button">Go!</button>
       </div>
     </div>
 
-    <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/popup.js"></script>
   </body>
 </html>

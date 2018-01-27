@@ -1,4 +1,29 @@
-function getContent(url) {
+var Boilerpipe = require('boilerpipe');
+var boilerpipe = new Boilerpipe({
+    extractor: Boilerpipe.Extractor.Article,
+    url: 'https://www.w3schools.com/js/js_functions.asp'
+  });
+						
+function getContent(url, callback) {  
+	boilerpipe.getText(
+		function(err, text){
+			if(!err){
+				callback(text);
+			}else{
+				console.log('Error');
+			}
+		}
+	);
+
+	// boilerpipe.getImages(
+	// 	function(err, images){
+	// 		if(!err){
+	// 			console.log(images);
+	// 		}else{
+	// 			console.log("NO IMAGES/ ERROR LOADING IMAGES")
+	// 		}
+	// 	}
+	// );
 }
 
 function parseResult(returnList) {
@@ -10,3 +35,5 @@ function parseResult(returnList) {
    }
    return res;
 }
+
+module.exports = {parseResult, getContent}

@@ -1,75 +1,41 @@
-var mathFieldSpan = document.getElementById('math-field');
-var latexSpan = document.getElementById('latex');
+var xhr = new XMLHttpRequest();
 
-var MQ = MathQuill.getInterface(2);
-var mathField = MQ.MathField(mathFieldSpan, {
-  spaceBehavesLikeTab: true, // configurable
-  handlers: {
-    edit: function() { // useful event handlers
-      latexSpan.textContent = mathField.latex();
-      var btn = document.getElementById("btn-copy");
-      btn.classList.remove("btn-success");
-      btn.classList.add("btn-primary");
-      btn.innerHTML = "Copy";
-    }
-  }
-});
-
-document.getElementById("btn-copy").addEventListener("click", function() {
-  copyToClipboard(document.getElementById("latex"));
-
-  event.target.classList.remove('btn-primary');
-  event.target.classList.add('btn-success');
-  event.target.innerHTML = "Copied!";
-});
-
-function copyToClipboard(elem) {
-    // create hidden text element, if it doesn't already exist
-    var targetId = "_hiddenCopyText_";
-    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
-    var origSelectionStart, origSelectionEnd;
-    if (isInput) {
-        // can just use the original source element for the selection and copy
-        target = elem;
-        origSelectionStart = elem.selectionStart;
-        origSelectionEnd = elem.selectionEnd;
-    } else {
-        // must use a temporary form element for the selection and copy
-        target = document.getElementById(targetId);
-        if (!target) {
-            var target = document.createElement("textarea");
-            target.style.position = "absolute";
-            target.style.left = "-9999px";
-            target.style.top = "0";
-            target.id = targetId;
-            document.body.appendChild(target);
-        }
-        target.textContent = elem.textContent;
-    }
-    // select the content
-    var currentFocus = document.activeElement;
-    target.focus();
-    target.setSelectionRange(0, target.value.length);
-    
-    // copy the selection
-    var succeed;
-    try {
-        succeed = document.execCommand("copy");
-    } catch(e) {
-        succeed = false;
-    }
-    // restore original focus
-    if (currentFocus && typeof currentFocus.focus === "function") {
-        currentFocus.focus();
-    }
-    
-    if (isInput) {
-        // restore prior selection
-        elem.setSelectionRange(origSelectionStart, origSelectionEnd);
-    } else {
-        // clear temporary content
-        target.textContent = "";
-    }
-
-    return succeed;
+function formatParams(params) {
+    return "?" + Object.keys(params).map(function(key) {
+        return key+"="+encodeURIComponent(params[key]);
+    }).join("&");
 }
+
+function to_second(day) {
+    return day * 24 * 60 * 60;
+}
+
+$('#submit-button').click(function() {
+    var duration_text = $('#duration').find("option:selected").text();
+    
+    var duration;
+    if (duration_text == "from 1 week ago") {
+        duration = to_second(7);
+    } else if (duration_text == "from 1 day ago") {
+        duration = to_second(1);
+    } else {
+        duration = -1;
+    }
+
+    var now = Math.round((new Date()).getTime() / 1000);
+    var start = (duration == -1 ? 1514764800 : now - duration);
+    
+    var search_term = $('#search-term').val();
+   
+    // alert(start + "\n" + now + "\n" + search_term);
+    var params = {
+        fromTime: start,
+        keywords: search_term
+    }
+    // alert(formatParams(params));
+    xhr.open('GET', 'http://localhost:3000/query' + formatParams(params));
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState > 3 && xhr.status==200) alert("QueryResult: " + xhr.responseText);
+    }
+    xhr.send();
+})
