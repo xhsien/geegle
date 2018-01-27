@@ -3,18 +3,20 @@
   <head>
     <title>texditor</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/mathquill.css" rel="stylesheet">
     <link href="css/popup.css" rel="stylesheet" >
   </head>
   <body>
-    <p><span id="math-field"></span></p>
-    <p><i style="color: grey">After finish typing, press Ctrl+A and Ctrl+C to highlight and copy the LaTeX code.</i></p>
-    <p><span id="latex"></span></p>
-    <button id="btn-copy" type="button" class="btn btn-block btn-primary">Copy</button>
+    <div class="col-lg-6">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..." autofocus>
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button">Go!</button>
+        </span>
+      </div>
+    </div>
 
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/mathquill.js"></script>
     <script src="js/popup.js"></script>
   </body>
 </html>
