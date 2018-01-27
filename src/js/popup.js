@@ -24,7 +24,7 @@ function to_second(day) {
 
 $('#submit-button').click(function() {
     $("#result").html("");
-
+    
     var duration_text = $('#duration').find("option:selected").text();
     
     var duration;
@@ -56,6 +56,9 @@ $('#submit-button').click(function() {
 
             $("#result").append('<ul class="list-group list-group-flush"></ul>');
             for (var i = 0; i < results.length; i++) {
+                var p = document.createElement("p");
+                p.innerHTML = (results[i][1].length > 50 ? results[i][1].substring(0, 50) + "..." : results[i][1]);
+
                 var a = document.createElement("a");
                 a.setAttribute('href', results[i][0]);
                 a.setAttribute('title', results[i][1]);
@@ -64,10 +67,25 @@ $('#submit-button').click(function() {
 
                 var li = document.createElement("li");
                 li.setAttribute('class', "list-group-item");
-                li.append(a)
+                li.append(p);
+                li.append(a);
                 $("ul").append(li);
-            }           
+            }          
         }
     }
     xhr.send();
+
+            // var results = [["https://github.com/chrisboo/geegle", "geegle"], 
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"],
+            //                ["https://stackoverflow.com/questions/35804081/can-google-vision-api-accept-external-image-url", "Can google cloud vision API accept external image URL? - Stack Overflow"]];
 })
