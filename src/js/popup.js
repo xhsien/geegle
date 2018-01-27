@@ -1,3 +1,4 @@
+// const https = require("https");
 var xhr = new XMLHttpRequest();
 
 function formatParams(params) {
@@ -32,11 +33,12 @@ $('#submit-button').click(function() {
         fromTime: start,
         keywords: search_term
     }
-    // alert(formatParams(params));
-    xhr.open('GET', 'http://localhost:3000/query' + formatParams(params));
+    alert(formatParams(params));
+    xhr.open('GET', 'https://localhost:3000/query' + formatParams(params));
     xhr.onreadystatechange = function() {
-        //if(xhr.readyState > 3 && xhr.status==200) 
-           //alert("QueryResult: " + xhr.responseText);
+        if(xhr.readyState > 3 && xhr.status==200) 
+           alert("QueryResult: " + xhr.responseText);
     }
     xhr.send();
+
 })

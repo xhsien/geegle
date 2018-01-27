@@ -1,6 +1,5 @@
 var Boilerpipe = require('boilerpipe');
-
-						
+					
 function getContent(url, callback) {  
 	var boilerpipe = new Boilerpipe({
     	extractor: Boilerpipe.Extractor.Article,
@@ -16,15 +15,15 @@ function getContent(url, callback) {
 		}
 	);
 
-	// boilerpipe.getImages(
-	// 	function(err, images){
-	// 		if(!err){
-	// 			console.log(images);
-	// 		}else{
-	// 			console.log("NO IMAGES/ ERROR LOADING IMAGES")
-	// 		}
-	// 	}
-	// );
+	boilerpipe.getImages(
+		function(err, images){
+			if(!err){
+				console.log(images);
+			}else{
+				console.log("NO IMAGES/ ERROR LOADING IMAGES")
+			}
+		}
+	);
 }
 
 function parseResult(returnList) {
