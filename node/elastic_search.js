@@ -5,7 +5,7 @@ var client = new es.Client({
     log: 'trace'
 });
 
-function post(date, url, id, callback) {
+function post(date, url, id, title, callback) {
   console.log("util" + utils);
   utils.getContent(url, function(content) {
      client.create({
@@ -15,7 +15,8 @@ function post(date, url, id, callback) {
           body: {
              content: content,
              uploadTime: date,
-             url: url
+             url: url,
+             title: title
           }
 
 

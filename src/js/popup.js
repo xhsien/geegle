@@ -52,19 +52,31 @@ $('#submit-button').click(function() {
     xhr.open('GET', 'https://localhost:3000/query' + formatParams(params));
     xhr.onreadystatechange = function() {
         if(xhr.readyState > 3 && xhr.status==200) { 
+            var results = JSON.parse(xhr.responseText);
+            // alert(results.suggested_words);
+            // $("#do-you-mean").innerHTML = "Do you mean: " + results.suggested_words;
+
             //alert(xhr.responseText);
-            var results = fromTextToArray(xhr.responseText);
-
+            
+            //console.log(results);
+            //alert(results);
+            //results.titles = results.urls;
             $("#result").append('<ul class="list-group list-group-flush"></ul>');
-            for (var i = 0; i < results.length; i++) {
+            for (var i = 0; i < results.urls.length; i++) {
+                //alert(results.titles);
                 var p = document.createElement("p");
-                p.innerHTML = (results[i][1].length > 50 ? results[i][1].substring(0, 50) + "..." : results[i][1]);
 
+                if (results.titles[i] == null) {
+                    results.titles[i] = results.urls[i];
+                }
+
+                p.innerHTML = (results.titles[i].length > 50 ? results.titles[i].substring(0, 50) + "..." : results.titles[i]);
+                //alert(p);
                 var a = document.createElement("a");
-                a.setAttribute('href', results[i][0]);
-                a.setAttribute('title', results[i][1]);
+                a.setAttribute('href', results.urls[i]);
+                a.setAttribute('title', results.titles[i]);
                 a.setAttribute('target', '_blank');
-                a.innerHTML = (results[i][0].length > 70 ? results[i][0].substring(0, 69) + "..." : results[i][0]);
+                a.innerHTML = (results.urls[i].length > 70 ? results.urls[i].substring(0, 69) + "..." : results.urls[i]);
 
                 var li = document.createElement("li");
                 li.setAttribute('class', "list-group-item");

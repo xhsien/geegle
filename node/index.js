@@ -25,6 +25,7 @@ https.createServer({
 // }
 
 var search_term_global;
+var suggested_words;
 
 function removeQuote(str) {
     return str.replace(new RegExp("'", 'g'), '');
@@ -51,8 +52,8 @@ function augment(search_term) {
         word2vec.getClosestWord(splitted_search_term[i].trim(), function(closest_word) {
           console.log("CLOSEST " + closest_word);
           closest_word = fromTextToArray(closest_word);
-          search_term_global += " " + removeQuote(closest_word[0]) + " " + removeQuote(closest_word[1]) +
-                                 " " + removeQuote(closest_word[2]);
+          suggested_words += " " + closest_word[0];
+          search_term_global += " " + removeQuote(closest_word[0]);
           console.log("MSUT BE HERE " + search_term_global);
           // setTimeOut(function() {old_i = i; i++;}, 10000);
             // console.log("HERE");
@@ -76,7 +77,7 @@ function augment(search_term) {
 }
 
 app.get('/uploadContent', (req, res) => {
-    es.post(req.query.uploadTime, req.query.url, req.query.id, function(confirmRes) { res.send(confirmRes); });
+    es.post(req.query.uploadTime, req.query.url, req.query.id, req.query.title, function(confirmRes) { res.send(confirmRes); });
 })
 
 
@@ -84,15 +85,18 @@ app.get('/uploadContent', (req, res) => {
 app.get('/query', (req, res) => {
     setTimeout(function() {
         search_term_global = "";
+        suggested_words = "";
         setTimeout(function() {
             console.log("QUERY: " + search_term_global);
             es.retrieve(search_term_global,  req.query.fromTime, function(returnList) {
                var list_urls = utils.parseResult(returnList); 
-               res.send(list_urls);
+               var urls = list_urls.map((x) => { return x[0]; });
+               var titles = list_urls.map((x) => { return x[1]; });
+               res.send(JSON.stringify({'urls': urls, 'titles': titles, 'suggested_words': suggested_words}));
             });
 
         }, 2000);
-        augment(req.query.keywords);
+        augment(req.query.keywords); 
     }, 0);
 
 
